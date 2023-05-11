@@ -11,6 +11,10 @@ stages:
   - name: "mr"
     jobs: 
       job:
+        runs-on:
+          pool-name: docker
+          container:
+            image: golang:latest 
         steps: 
           - name: "checkout"
             checkout: self
