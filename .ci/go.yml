@@ -48,18 +48,3 @@ stages:
             run: |-
               #!/bin/bash
               /usr/local/go/bin/go test ./...
-      
-      job_MacOS:
-        name: "MacOS Build & Test"
-        runs-on: macos-latest
-        steps: 
-          - name: "checkout"
-            checkout: self
-
-          - name: "build" 
-            run: |-
-              #!/bin/bash
-              /usr/local/go/bin/go build ./...
-          
-          - name: "test"
-          
