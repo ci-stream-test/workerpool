@@ -25,6 +25,8 @@ stages:
                 rm -rf /usr/local/go && tar -C /usr/local -xzf $install_go_version.tar.gz
 
                 # Add the path of Go to the user's configuration file.
+                # 将 export 加到 bashrc 还是不行，可能启动的时候并不是走的 ~/.bashrc
+                # 下面还是直接用绝对路径执行
                 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
                 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.profile
 
@@ -39,10 +41,10 @@ stages:
           - name: "build" 
             run: |-
               #!/bin/bash
-              go build ./...
+              /usr/local/go/bin/go build ./...
           
           - name: "test"
             run: |-
               #!/bin/bash
-              go test ./...
+              /usr/local/go/bin/go test ./...
           
