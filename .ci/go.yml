@@ -10,32 +10,10 @@ on:
 stages:
   - name: "linux"
     jobs: 
-      job_Linux:
-        name: "Linux Build & Test"
+      job_MacOS:
+        name: "MacOS Build & Test"
+        runs-on: macos-latest
         steps: 
-          - name: "install golang"
-            run: |-
-              #!/bin/bash
-              if command -v go &> /dev/null; then
-                go_version=$(go version)
-                echo "Go is installed. Version: $go_version"
-              else
-                echo "Go is not installed. Install now"
-                install_go_version=go1.20.4.linux-amd64
-                wget https://go.dev/dl/$install_go_version.tar.gz
-                rm -rf /usr/local/go && tar -C /usr/local -xzf $install_go_version.tar.gz
-
-                # Add the path of Go to the user's configuration file.
-                # 将 export 加到 bashrc 还是不行，可能启动的时候并不是走的 ~/.bashrc
-                # 下面还是直接用绝对路径执行
-                echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
-                echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.profile
-
-                # Update the PATH of the current shell session immediately.
-                export PATH=$PATH:/usr/local/go/bin
-                go version
-              fi
-
           - name: "checkout"
             checkout: self
 
@@ -45,6 +23,4 @@ stages:
               /usr/local/go/bin/go build ./...
           
           - name: "test"
-            run: |-
-              #!/bin/bash
-              /usr/local/go/bin/go test ./...
+          
