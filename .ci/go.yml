@@ -11,11 +11,19 @@ stages:
   - name: "mr"
     jobs: 
       job:
-        runs-on:
-          pool-name: docker
-          container:
-            image: golang:latest 
         steps: 
+          - name: "install golang"
+            run: |-
+              #!/bin/bash
+              if command -v go &> /dev/null; then
+                go_version=$(go version)
+                echo "Go is installed. Version: $go_version"
+              else
+                echo "Go is not installed. Install now"
+                export PATH=$PATH:/usr/local/go/bin
+                go version
+              fi
+
           - name: "checkout"
             checkout: self
 
