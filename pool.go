@@ -96,6 +96,7 @@ func (p *Pool) GoCtx(ctx context.Context, task Task) {
 				task()
 			case <-idleTimer.C:
 				// worker exits
+				log.Printf("goroutine return...")
 				return
 			}
 
